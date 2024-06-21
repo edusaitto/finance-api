@@ -2,6 +2,10 @@ import { FastifyReply } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 
 export const contentParserConfig = (app: FastifyInstance) => {
+  app.setNotFoundHandler((request, reply) => {
+    reply.code(404).send(0);
+  });
+
   app.addContentTypeParser(
     "application/json",
     { parseAs: "string" },
