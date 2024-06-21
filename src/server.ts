@@ -3,7 +3,7 @@ import fastify from "fastify";
 const app = fastify();
 
 app.post("/reset", (request, reply) => {
-  return reply.status(200).send();
+  return reply.status(200).send("OK");
 });
 
 app
