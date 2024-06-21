@@ -2,21 +2,9 @@ import fastify from "fastify";
 
 const app = fastify();
 
-fastify.addContentTypeParser("*", (request, payload, done) => {
-  let data = "";
-  payload.on("data", (chunk) => {
-    data += chunk;
-  });
-  payload.on("end", () => {
-    done(null, data);
-  });
-  payload.on("error", (err) => {
-    done(err);
-  });
-});
+app.removeAllContentTypeParsers();
 
 app.post("/reset", (request, reply) => {
-  reply.header("Content-Type", "*/*");
   return reply.status(200).send("OK");
 });
 
