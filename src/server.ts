@@ -2,18 +2,19 @@ import fastify from "fastify";
 
 const app = fastify();
 
-app.addContentTypeParser("*", (request, payload, done) => {
-  let data = "";
-  payload.on("data", (chunk) => {
-    data += chunk;
-  });
-  payload.on("end", () => {
-    done(null, data);
-  });
-  payload.on("error", (err) => {
-    done(err);
-  });
-});
+app.addContentTypeParser(
+  "application/json",
+  { parseAs: "string" },
+  (req, body, done) => {
+    if (!body || body.toString().trim() === "") {
+      done(null, {});
+    } else {
+      try {
+        done(null, JSON.parse(body.toString()));
+      } catch (err) {}
+    }
+  }
+);
 
 app.post("/reset", (request, reply) => {
   const body = request.body as string;
