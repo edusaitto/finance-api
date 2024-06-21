@@ -2,7 +2,18 @@ import fastify from "fastify";
 
 const app = fastify();
 
-app.removeAllContentTypeParsers();
+app.addContentTypeParser("*", (request, payload, done) => {
+  let data = "";
+  payload.on("data", (chunk) => {
+    data += chunk;
+  });
+  payload.on("end", () => {
+    done(null, data);
+  });
+  payload.on("error", (err) => {
+    done(err);
+  });
+});
 
 app.post("/reset", (request, reply) => {
   return reply.status(200).send("OK");
