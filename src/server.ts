@@ -16,6 +16,12 @@ app.addContentTypeParser("*", (request, payload, done) => {
 });
 
 app.post("/reset", (request, reply) => {
+  const body = request.body as string;
+
+  if (!body || body.length === 0) {
+    return reply.status(400).send({ error: "Corpo vazio" });
+  }
+
   return reply.status(200).send("OK");
 });
 
