@@ -1,8 +1,15 @@
 import { FastifyReply } from "fastify";
 
+export enum EventTypes {
+  DEPOSIT = "deposit",
+  WITHDRAW = "withdraw",
+  TRANSFER = "transfer",
+}
+
 export interface EventRequestBody {
   type: string;
-  destination: string;
+  origin?: string;
+  destination?: string;
   amount: number;
 }
 

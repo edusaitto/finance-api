@@ -1,7 +1,8 @@
 import { BalanceRequestQuery, BalanceControllerParams } from "./balance";
-import { EventRequestBody, EventControllerParams } from "./event";
+import { EventRequestBody, EventControllerParams, EventTypes } from "./event";
 
 export {
+  EventTypes,
   EventRequestBody,
   EventControllerParams,
   BalanceRequestQuery,
