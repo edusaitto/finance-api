@@ -12,21 +12,16 @@ export const router = (app: FastifyInstance) => {
   });
 
   app.post(
-    "/balance",
+    "/event",
     (request: FastifyRequest<{ Body: TransactionRequest }>, reply) => {
-      const query = request.query as { [key: string]: string };
-      const account_id = query.account_id;
-      if (account_id) {
-        const { type, destination, amount } = request.body;
-        if (type === "deposit") {
-          // get account and add amount value
-        }
-        updateAccount({ account: { id: destination, balance: amount } });
-        return reply
-          .status(201)
-          .send({ destination: { id: destination, balance: amount } });
+      const { type, destination, amount } = request.body;
+      if (type === "deposit") {
+        // get account and add amount value
       }
-      return reply.status(400).send({ message: `Account not found!` });
+      updateAccount({ account: { id: destination, balance: amount } });
+      return reply
+        .status(201)
+        .send({ destination: { id: destination, balance: amount } });
     }
   );
 };
