@@ -1,37 +1,24 @@
 import { FastifyInstance } from "fastify/types/instance";
-import { verifyBody } from "./utils/contentParser";
 import { FastifyRequest } from "fastify/types/request";
-import { TransactionRequest } from "./interfaces/transaction";
-import { getAccountById, updateAccount } from "./services/account";
-import { accounts } from "./database";
+import { EventController } from "./controllers/event";
+import { EventRequestBody } from "./interfaces/event";
+import { ResetController } from "./controllers/reset";
+import { BalanceController } from "./controllers/balance";
+import { BalanceRequestQuery } from "./interfaces";
 
 export const router = (app: FastifyInstance) => {
-  app.post("/reset", (request, reply) => {
-    const body = request.body as string;
-    verifyBody(body, reply);
-    return reply.status(200).send("OK");
+  app.post("/reset", (_, reply) => {
+    ResetController(reply);
   });
 
   app.post(
     "/event",
-    (request: FastifyRequest<{ Body: TransactionRequest }>, reply) => {
-      const { type, destination, amount } = request.body;
-      // let account = getAccountById(destination);
-      // if (!account) {
-      //   return reply.status(404).send(0);
-      // }
-
-      //if (type === "deposit") {
-      accounts[0].balance += amount;
-      // }
-
-      // updateAccount({ account });
-
-      return reply
-        .status(201)
-        .send({
-          destination: { id: destination, balance: accounts[0].balance },
-        });
+    (request: FastifyRequest<{ Body: EventRequestBody }>, reply) => {
+      EventController({ body: request.body, reply });
     }
   );
+
+  app.get("/balance", (request, reply) => {
+    BalanceController({query: request.query as BalanceRequestQuery, reply})
+  });
 };
