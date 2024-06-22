@@ -1,5 +1,4 @@
-import { FastifyReply } from "fastify";
-import { FastifyInstance } from "fastify/types/instance";
+import { FastifyInstance } from "fastify";
 
 export const contentParserConfig = (app: FastifyInstance) => {
   app.setNotFoundHandler((request, reply) => {
@@ -19,10 +18,4 @@ export const contentParserConfig = (app: FastifyInstance) => {
       }
     }
   );
-};
-
-export const verifyBody = (body: string, reply: FastifyReply) => {
-  if (!body || body.length === 0) {
-    return reply.status(400).send({ error: "Empty body" });
-  }
 };
