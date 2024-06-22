@@ -23,6 +23,6 @@ export const contentParserConfig = (app: FastifyInstance) => {
 
 export const verifyBody = (body: string, reply: FastifyReply) => {
   if (!body || body.length === 0) {
-    return reply.status(400).send({ error: "Corpo vazio" });
+    return reply.status(400).send({ error: "Empty body" });
   }
 };
