@@ -27,7 +27,7 @@ export const EventController = ({ body, reply }: EventControllerParams) => {
         origin: { id: origin, balance: originAccount.balance },
       });
     case EventTypes.TRANSFER:
-      if (!originAccount && !destinationAccount) {
+      if (!originAccount || !destinationAccount) {
         return reply.status(404).send(0);
       }
       originAccount!.balance -= amount;
