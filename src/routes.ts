@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify/types/instance";
 import { verifyBody } from "./utils/contentParser";
 import { FastifyRequest } from "fastify/types/request";
-import { updateAccount } from "./services/balance";
 import { TransactionRequest } from "./interfaces/transaction";
+import { updateAccount } from "./services/account";
 
 export const router = (app: FastifyInstance) => {
   app.post("/reset", (request, reply) => {
