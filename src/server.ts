@@ -9,7 +9,7 @@ router(app);
 
 app
   .listen({
-    host: "127.0.0.1",
+    host: process.env.HOST ?? "0.0.0.0",
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
   })
   .then(() => {
