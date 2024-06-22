@@ -3,6 +3,7 @@ import { verifyBody } from "./utils/contentParser";
 import { FastifyRequest } from "fastify/types/request";
 import { TransactionRequest } from "./interfaces/transaction";
 import { getAccountById, updateAccount } from "./services/account";
+import { accounts } from "./database";
 
 export const router = (app: FastifyInstance) => {
   app.post("/reset", (request, reply) => {
@@ -15,20 +16,22 @@ export const router = (app: FastifyInstance) => {
     "/event",
     (request: FastifyRequest<{ Body: TransactionRequest }>, reply) => {
       const { type, destination, amount } = request.body;
-      let account = getAccountById(destination);
-      if (!account) {
-        return reply.status(404).send(0);
-      }
+      // let account = getAccountById(destination);
+      // if (!account) {
+      //   return reply.status(404).send(0);
+      // }
 
-      if (type === "deposit") {
-        account.balance += amount;
-      }
+      //if (type === "deposit") {
+      accounts[0].balance += amount;
+      // }
 
-      updateAccount({ account });
+      // updateAccount({ account });
 
       return reply
         .status(201)
-        .send({ destination: { id: destination, balance: amount } });
+        .send({
+          destination: { id: destination, balance: accounts[0].balance },
+        });
     }
   );
 };
