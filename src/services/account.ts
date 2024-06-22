@@ -1,16 +1,24 @@
-import { accounts } from "../database";
+import { accounts, initialState } from "../database";
 import { Account } from "../models/account";
 
 interface IUpdateAccount {
   account: Account;
 }
 
-export const getAccountById = (id: string): Account | void => {
+export const resetAccounts = () => {
   accounts.map((_acc, i) => {
+    accounts[i] = initialState[i];
+  });
+};
+
+export const getAccountById = (id: string): Account | void => {
+  let _account;
+  accounts.map((_acc) => {
     if (_acc.id === id) {
-      return _acc;
+      _account = _acc;
     }
   });
+  return _account;
 };
 
 export const updateAccount = ({ account }: IUpdateAccount) => {
