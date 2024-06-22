@@ -1,10 +1,12 @@
 import { FastifyInstance } from "fastify/types/instance";
 import { FastifyRequest } from "fastify/types/request";
-import { EventController } from "./controllers/event";
 import { EventRequestBody } from "./interfaces/event";
-import { ResetController } from "./controllers/reset";
-import { BalanceController } from "./controllers/balance";
 import { BalanceRequestQuery } from "./interfaces";
+import {
+  EventController,
+  ResetController,
+  BalanceController,
+} from "./controllers";
 
 export const router = (app: FastifyInstance) => {
   app.post("/reset", (_, reply) => {
@@ -19,6 +21,6 @@ export const router = (app: FastifyInstance) => {
   );
 
   app.get("/balance", (request, reply) => {
-    BalanceController({query: request.query as BalanceRequestQuery, reply})
+    BalanceController({ query: request.query as BalanceRequestQuery, reply });
   });
 };
